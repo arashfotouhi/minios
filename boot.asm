@@ -2,39 +2,33 @@
 
 mov [BOOT_DRIVE], dl
 
-mov bp, 0x8000
+mov bp, 0x9000
 mov sp, bp
 
-mov bx, 0x9000
-mov dh, 2
-mov dl, [BOOT_DRIVE]
-call disk_load
-
-mov dx, [0x9000]
-call printhex
-
-mov dx, [0x9000 + 512]
-call printhex
-
-mov bx, BOOTLOADER_STRING
-mov dx, 0x1fb6
+mov bx, MSG_REAL_MODE
 call printstr
-call printhex
+
+call switch_to_pm
 
 jmp $
 
-%include "printstr.asm"
-%include "printhex.asm"
-%include "disk_load.asm"
+%include "print/printstr.asm"
+%include "gdt.asm"
+%include "print/printstrpm.asm"
+%include "switch_to_pm.asm"
 
-BOOTLOADER_STRING:
-	db 'minios_bootloader',0
+[bits 32]
+
+BEGIN_PM:
+	mov ebx, MSG_PROT_MODE
+	call printstrpm
+
+	jmp $
+
+MSG_REAL_MODE db "Started in 16-bit Real Mode",0
+MSG_PROT_MODE db "Successfully landed in 32-bit Protected Mode",0
 
 BOOT_DRIVE: db 0
 
 times 510-($-$$) db 0
-
 dw 0xaa55
-
-times 256 dw 0xdada
-times 256 dw 0xface
