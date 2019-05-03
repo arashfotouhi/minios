@@ -1,5 +1,6 @@
 #include "screen.h"
 #include "../kernel/low_level.h"
+#include "../kernel/util.h"
 
 int get_screen_offset (int col, int row) { 
 	return 2 * (row * MAX_COLS + col);
@@ -31,7 +32,33 @@ int handle_scrolling (int offset)
 
 int print_char (char character, int col, int row, char attribute_byte)
 {
-	unsigned char *vidmem = (unsigned char*) VIDEO_ADDRESS;
+	char *vidmem = (char *)VIDEO_ADDRESS;
+
+	/****************** DEBUG BLOCK *******************/
+
+    // This produces a music note symbol instead of 'A'
+    // the music symbol is probably represented by ascii 0x0E
+    vidmem[0] = 0x41; //'A'
+    vidmem[1] = 0x0E; //yellow on black
+
+    // This also produces the undesired result above as expected
+    // because this is equivalent to the above block of code
+    //*vidmem = 0x41;
+    //*(vidmem+1) = 0x0E;
+
+    // This produces a yellow 'A' on black background as expected.
+    //*vidmem = 0x41;
+    //vidmem++;
+    //*vidmem = 0x0E;
+
+    // This also produces the correct result (ie, 'A', yellow on black)
+    //*vidmem = 0x41; 
+    //vidmem = vidmem + 1;
+    //*vidmem = 0x0E;
+
+	return 0;
+	/**************** END DEBUG BLOCK **********************/
+
 	if (!attribute_byte) {
 		attribute_byte = WHITE_ON_BLACK;
 	}
@@ -47,10 +74,25 @@ int print_char (char character, int col, int row, char attribute_byte)
 		int rows = offset / (2 * MAX_COLS);
 		offset = get_screen_offset(79, rows);
 	} else {
-		vidmem[offset] = character;
-		vidmem[offset+1] = attribute_byte;
+		vidmem[offset] = (attribute_byte << 8) + character;
+		//temp ++;
+		//*temp = attribute_byte;
 		offset += 2;
 	}
+
+	if (offset >= MAX_ROWS * MAX_COLS * 2) {
+        int i;
+        for (i = 1; i < MAX_ROWS; i++)
+            memory_copy(get_screen_offset(0, i) + VIDEO_ADDRESS,
+                        get_screen_offset(0, i-1) + VIDEO_ADDRESS,
+                        MAX_COLS * 2);
+
+        /* Blank last line */
+        char *last_line = get_screen_offset(0, MAX_ROWS-1) + VIDEO_ADDRESS;
+        for (i = 0; i < MAX_COLS * 2; i++) last_line[i] = 0;
+
+        offset -= 2 * MAX_COLS;
+    	}
 
 	offset = handle_scrolling(offset);
 	set_cursor(offset);

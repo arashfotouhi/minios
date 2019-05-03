@@ -33,7 +33,7 @@ clean:
 	rm -rf kernel/*.o boot/*.bin drivers/*.o
 
 kernel.dis: kernel.bin
-	ndisasm -b 64 $< > $a
+	ndisasm -b 64 $< > $@
 
 run: all
 	$(EMU) $(EMUFLAGS) minios
