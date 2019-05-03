@@ -15,11 +15,11 @@ call switch_to_pm
 
 jmp $
 
-%include "print/printstr.asm"
-%include "disk/disk_load.asm"
-%include "pm/gdt.asm"
-%include "pm/printstrpm.asm"
-%include "pm/switch_to_pm.asm"
+%include "boot/print/printstr.asm"
+%include "boot/disk/disk_load.asm"
+%include "boot/pm/gdt.asm"
+%include "boot/pm/printstrpm.asm"
+%include "boot/pm/switch_to_pm.asm"
 
 [bits 16]
 
