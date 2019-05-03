@@ -4,7 +4,7 @@ HEADERS = $(wildcard kernel/*.h drivers/*.h)
 OBJ = ${C_SOURCES:.c=.o}
 
 CC = gcc
-CCFLAGS = -march=i386
+CCFLAGS = -m32 -g -Wall
 LD = ld
 AS = nasm
 EMU = qemu-system-i386
@@ -17,13 +17,13 @@ minios: boot/boot.bin kernel.bin
 	cat $^ > minios
 
 kernel.bin: kernel/kernel_entry.o ${OBJ}
-	$(LD) -o $@ -Ttext 0x1000 $^ --oformat binary
+	$(LD) -m elf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary
 
 %.o: %.c ${HEADERS}
-	$(CC) -ffreestanding -c $< -o $@
+	$(CC) $(CCFLAGS) -ffreestanding -c $< -o $@
 
 %.o: %.asm
-	$(AS) $< -f elf64 -o $@
+	$(AS) $< -f elf32 -o $@
 	
 %.bin: %.asm
 	$(AS) $< -f bin -I '../../16bit/' -o $@
@@ -33,7 +33,7 @@ clean:
 	rm -rf kernel/*.o boot/*.bin drivers/*.o
 
 kernel.dis: kernel.bin
-	ndisasm -b 64 $< > $@
+	ndisasm -b 32 $< > $@
 
 run: all
 	$(EMU) $(EMUFLAGS) minios
