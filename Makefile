@@ -4,10 +4,12 @@ HEADERS = $(wildcard kernel/*.h drivers/*.h)
 OBJ = ${C_SOURCES:.c=.o}
 
 CC = gcc
+CCFLAGS = -march=i386
 LD = ld
 AS = nasm
-EMU = qemu-system-x86_64
-EMUFLAGS = -m 1024 -boot c -enable-kvm -smp 3
+EMU = qemu-system-i386
+#EMUFLAGS = -m 1024 -boot c -enable-kvm -smp 3
+EMUFLAGS = -device isa-debug-exit,iobase=0xf4,iosize=0x04 -fda
 
 all: minios
 
