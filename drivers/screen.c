@@ -104,3 +104,20 @@ void clear_screen ()
 	}
 	set_cursor(get_screen_offset(0, 0));
 }
+
+void test_screen (void) 
+{
+	int row;
+	int col;
+	char ch = 0;
+	char forground = 8;
+	char background = 0;
+	char attribute;
+
+	for (col = 0; col < MAX_COLS; col++) {
+		for (row = 0; row < MAX_ROWS; row++) {
+			attribute = (background++ << 8) + forground++;		
+			print_char(ch++, col, row, attribute);
+		}
+	}
+}
