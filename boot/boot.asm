@@ -1,4 +1,8 @@
 [org 0x7c00]
+
+mov ax, 0x0000
+mov ds, ax
+
 KERNEL_OFFSET equ 0x1000
 
 mov [BOOT_DRIVE], dl
