@@ -67,21 +67,32 @@ mov sp, bp
 mov bx, MSG_REAL_MODE
 call printstr
 
+; Calling the routine that loads the kernel onto disk.
+; Note that this does NOT execute the kernel yet, it
+; just loads the kernel on the disk. We will start
+; executing the kernel after switching to 32 bit mode
 call load_kernel
 
+; Calling the routine that switches to 32 bit mode.
+; After calling this routine we will be operating
+; in 32 bit mode
 call switch_to_pm
 
-jmp $
+; All the include assembly include files
+; that we are using in this source file
+%include "boot/print/printstr.asm" ; used for printing strings on the screen in 16 bit mode
+%include "boot/disk/disk_load.asm" ; used for loading blocks onto the disk
+%include "boot/pm/gdt.asm" ; used for defining the Global Decriptor Table
+%include "boot/pm/printstrpm.asm" ; used for printing strings in 32 bit mode
+%include "boot/pm/switch_to_pm.asm" ; used for switching to 32 bit mode
 
-%include "boot/print/printstr.asm"
-%include "boot/disk/disk_load.asm"
-%include "boot/pm/gdt.asm"
-%include "boot/pm/printstrpm.asm"
-%include "boot/pm/switch_to_pm.asm"
-
+; At this point we have to make sure we are telling assembler that we
+; are operating in 16 bit mode
 [bits 16]
 
+; This is the routine that loads the kernel onto the disk
 load_kernel:
+	; print the appropriate message on the screen
 	mov bx, MSG_LOAD_KERNEL
 	call printstr
 
