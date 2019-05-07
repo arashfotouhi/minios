@@ -1,7 +1,8 @@
 #include "screen.h"
 #include "../kernel/low_level.h"
 
-int get_screen_offset (int col, int row) { 
+int get_screen_offset (int col, int row) 
+{ 
 	return 2 * (row * MAX_COLS + col);
 }
 
@@ -32,16 +33,14 @@ int handle_scrolling (int offset)
 int print_char (char character, int col, int row, char attribute_byte)
 {
 	unsigned char *vidmem = (unsigned char*) VIDEO_ADDRESS;
-	if (!attribute_byte) {
+	if (!attribute_byte) 
 		attribute_byte = WHITE_ON_BLACK;
-	}
 
 	int offset;
-	if (col >= 0 && row >= 0) {
+	if (col >= 0 && row >= 0)
 		offset = get_screen_offset(col, row);
-	} else {
+	else
 		offset = get_cursor();
-	}
 
 	if (character == '\n') {
 		int rows = offset / (2 * MAX_COLS);
@@ -71,9 +70,9 @@ void print_at (char* message, int col, int row)
 {
 	int offset;
 
-	if (col >= 0 && row >= 0) {
+	if (col >= 0 && row >= 0)
 		offset = get_screen_offset(col, row);
-	} else {
+	else {
 		offset = get_cursor();
 		row = get_offset_row(offset);
 		col = get_offset_col(offset);
