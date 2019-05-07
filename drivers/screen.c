@@ -1,5 +1,6 @@
 #include "screen.h"
 #include "../kernel/low_level.h"
+#include "../kernel/util.h"
 
 int get_screen_offset (int col, int row) 
 { 
@@ -26,7 +27,24 @@ int get_cursor ()
 
 int handle_scrolling (int offset)
 {
-	//TODO: needs to be properly implemented
+	if (offset < (2 * MAX_COLS * MAX_ROWS)) {
+		return offset;
+	}
+
+	int i;
+	for (i=1; i < MAX_ROWS; i++) {
+		memory_copy((char *)(get_screen_offset(0, i) + VIDEO_ADDRESS),
+				(char *)(get_screen_offset(0, i-1) + VIDEO_ADDRESS),
+				MAX_COLS * 2);
+	}
+	
+	char* last_line = (char *)(get_screen_offset(0, MAX_ROWS - 1) + VIDEO_ADDRESS);
+	for (i=0; i < MAX_COLS * 2; i++) {
+		last_line[i] = 0;
+	}
+
+	offset -= 2 * MAX_COLS;
+
 	return offset;
 }
 
@@ -44,7 +62,7 @@ int print_char (char character, int col, int row, char attribute_byte)
 
 	if (character == '\n') {
 		int rows = offset / (2 * MAX_COLS);
-		offset = get_screen_offset(80, rows);
+		offset = get_screen_offset(MAX_COLS, rows);
 	} else {
 		vidmem[offset] = character;
 		vidmem[offset+1] = attribute_byte;
