@@ -90,7 +90,12 @@ call switch_to_pm
 ; are operating in 16 bit mode
 [bits 16]
 
-; This is the routine that loads the kernel onto the disk
+; The operating system is not going to fit in the first sector of the
+; boot device (that's only 512 bytes). So we need to load the operating
+; system from the boot device onto the memory for the cpu to execute. Here
+; we're loading 50 sectors from the boot disc onto memory location defined
+; by KERNEL_OFFSET. Later we will explicitly call and give control of
+; exeuction to this location.
 load_kernel:
 	; print the appropriate message on the screen
 	mov bx, MSG_LOAD_KERNEL
@@ -103,20 +108,34 @@ load_kernel:
 
 	ret
 
+; We will be operating in 32 bit protected mode at this point so we
+; need to explicitly let assembler know
 [bits 32]
 
+; The switch_to_pm routine jumps here
 BEGIN_PM:
+	; Display message that we're in protected mode
 	mov ebx, MSG_PROT_MODE
 	call printstrpm
 
+	; Call the kernel which we know for sure is located at KERNEL_OFFSET
+	; because we loaded it from disk at this location.
 	call KERNEL_OFFSET
 
+	; We should never reach this place so just loop indefinitely
 	jmp $
 
-BOOT_DRIVE: db 0
+; Global variables
+BOOT_DRIVE: db 0 ; Holds out boot drive ID / number
+
+; Message strings
 MSG_REAL_MODE db "Started in 16-bit Real Mode",0
 MSG_PROT_MODE db "Successfully landed in 32-bit Protected Mode",0
 MSG_LOAD_KERNEL db "Loading kernel into memory",0
 
+; BIOS looks for the magic number 0xAA55 at the end of the
+; first sector and that's how it knows this device is bootable
+; so here were are zeroing all the remaining bytes until the 
+; last byte which we initialize with 0xAA55
 times 510-($-$$) db 0
 dw 0xaa55
