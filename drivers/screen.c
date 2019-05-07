@@ -108,15 +108,19 @@ void print_uint (unsigned int n)
 {
 	unsigned char zero = 48;
 	int reversed = 0;
-	if (!n)
+	int digit_count = 0;
+	if (!n) { 
 		print_char(zero, -1, -1, WHITE_ON_BLACK);
+		return;
+	}
 	while (n > 0) {
 		reversed += n % 10;
 		reversed *= 10;
 		n /= 10;
+		digit_count++;
 	}
 	reversed /= 10;
-	while (reversed > 0) {
+	while (digit_count-- > 0) {
 		print_char(reversed % 10 + zero, -1, -1, WHITE_ON_BLACK);
 		reversed /= 10;
 	}
