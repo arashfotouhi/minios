@@ -8,5 +8,5 @@
 int print_char (char character, int col, int row, char attribute_byte);
 void print_at (char* message, int col, int row);
 void print (char* message);
-void print_int (int n);
+void print_uint (unsigned int n);
 void clear_screen();

@@ -104,7 +104,7 @@ void clear_screen ()
 	set_cursor(get_screen_offset(0, 0));
 }
 
-void print_int (int n)
+void print_uint (unsigned int n)
 {
 	unsigned char zero = 48;
 	int reversed = 0;
