@@ -1,7 +1,7 @@
 C_SOURCES = $(wildcard kernel/*.c drivers/*.c cpu/*.c)
 HEADERS = $(wildcard kernel/*.h drivers/*.h cpu/*.h)
 
-OBJ = ${C_SOURCES:.c=.o}
+OBJ = ${C_SOURCES:.c=.o cpu/interrupt.o}
 
 CC = gcc
 
@@ -12,7 +12,7 @@ CC = gcc
 # Now adding this flag to explicitly state that position independent
 # executable should be stopped.
 
-CCFLAGS = -m32 -g -Wall -fno-pie
+CCFLAGS = -m32 -g -Wall -fno-pie -fstack-protector
 LD = ld
 AS = nasm
 EMU = qemu-system-i386
