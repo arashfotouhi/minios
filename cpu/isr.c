@@ -80,9 +80,7 @@ char *exception_message[] = {
 
 void isr_handler(registers_t r) {
 	print("Received Interrupt: ");
-	char s[3];
-	int_to_ascii(r.int_no, s);
-	print(s);
+	print_uint(r.int_no);
 	print("\n");
 	print(exception_message[r.int_no]);
 	print("\n");
