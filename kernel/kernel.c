@@ -1,5 +1,6 @@
 #include "../drivers/screen.h"
 #include "../cpu/isr.h"
+#include "../cpu/timer.h"
 
 void main (void) 
 {
@@ -48,4 +49,7 @@ void main (void)
 	__asm__ __volatile__("int $29");
 	__asm__ __volatile__("int $30");
 	__asm__ __volatile__("int $31");*/
+
+	asm volatile("sti");
+	init_timer(50);
 }
