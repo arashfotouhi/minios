@@ -51,5 +51,7 @@ void main (void)
 	__asm__ __volatile__("int $31");*/
 
 	asm volatile("sti");
-	init_timer(50);
+	//init_timer(50);
+
+	init_keyboard();
 }
