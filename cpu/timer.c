@@ -1,6 +1,5 @@
 #include "timer.h"
 #include "../drivers/screen.h"
-#include "../kernel/util.h"
 #include "isr.h"
 
 u32 tick = 0;
@@ -8,9 +7,9 @@ u32 tick = 0;
 static void timer_callback (registers_t regs)
 {
 	tick++;
-	print("Tick: ");
-	print_uint(tick);
-	print("\n");
+	//print("Tick: ");
+	//print_uint(tick);
+	//print("\n");
 }
 
 void init_timer (u32 freq) {
