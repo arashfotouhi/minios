@@ -1,6 +1,6 @@
 #include "screen.h"
 #include "../kernel/low_level.h"
-#include "../kernel/util.h"
+#include "../lib/libc/mem.h"
 
 int get_screen_offset (int col, int row) 
 { 
@@ -33,8 +33,8 @@ int handle_scrolling (int offset)
 
 	int i;
 	for (i=1; i < MAX_ROWS; i++) {
-		memory_copy((char *)(get_screen_offset(0, i) + VIDEO_ADDRESS),
-				(char *)(get_screen_offset(0, i-1) + VIDEO_ADDRESS),
+		memory_copy((u8 *)(get_screen_offset(0, i) + VIDEO_ADDRESS),
+				(u8 *)(get_screen_offset(0, i-1) + VIDEO_ADDRESS),
 				MAX_COLS * 2);
 	}
 	

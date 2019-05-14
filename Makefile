@@ -1,5 +1,5 @@
-C_SOURCES = $(wildcard kernel/*.c drivers/*.c cpu/*.c)
-HEADERS = $(wildcard kernel/*.h drivers/*.h cpu/*.h)
+C_SOURCES = $(wildcard kernel/*.c drivers/*.c cpu/*.c lib/libc/*.c)
+HEADERS = $(wildcard kernel/*.h drivers/*.h cpu/*.h lib/libc/*.h)
 
 OBJ = ${C_SOURCES:.c=.o cpu/interrupt.o}
 
@@ -38,7 +38,7 @@ kernel.bin: kernel/kernel_entry.o ${OBJ}
 
 clean:
 	rm -rf *.bin *.dis *.map *.o minios	
-	rm -rf kernel/*.o boot/*.bin drivers/*.o cpu/*.o
+	rm -rf kernel/*.o boot/*.bin drivers/*.o cpu/*.o lib/libc/*.o
 
 kernel.dis: kernel.bin
 	ndisasm -b 32 $< > $@

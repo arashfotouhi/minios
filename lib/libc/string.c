@@ -1,4 +1,4 @@
-#include "string.c"
+#include "string.h"
 
 void int_to_ascii (int n, char str[]) 
 {
