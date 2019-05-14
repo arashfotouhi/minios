@@ -3,6 +3,15 @@
 #include "../cpu/isr.h"
 #include "screen.h"
 
+static char const* keyboard_key[0x40] = {
+#include "keymap.h"
+};
+
+void print_key (u8 scancode)
+{
+	print(keyboard_key[scancode]);	
+}
+
 static void keyboard_callback (registers_t regs)
 {
 	// you have to actually read from 0x60
@@ -11,8 +20,8 @@ static void keyboard_callback (registers_t regs)
 	// key presses.
 	u8 scancode = port_byte_in(0x60);
 
-	print_uint(scancode);
-	print("\n");
+	//print_uint(scancode);
+	print_key(scancode);
 }
 
 void init_keyboard (void)

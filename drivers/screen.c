@@ -84,7 +84,7 @@ int get_offset_col (int offset)
 	return (offset - (get_offset_row(offset) * 2 * MAX_COLS)) / 2;
 }
 
-void print_at (char* message, int col, int row)
+void print_at (const char* message, int col, int row)
 {
 	int offset;
 
@@ -104,7 +104,7 @@ void print_at (char* message, int col, int row)
 	}
 }
 
-void print(char* message)
+void print(const char* message)
 {
 	print_at(message, -1, -1);
 }
