@@ -4,7 +4,7 @@
 #include "../cpu/isr.h"
 #include "screen.h"
 
-#define SC_MAX 57
+#define SC_MAX 58
 #define BACKSPACE 0x0E
 #define ENTER 0x1C
 
