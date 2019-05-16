@@ -1,5 +1,15 @@
 #include "string.h"
 
+int strlen (char str[])
+{
+	int count = 0;
+	while(str[count] != '\0') {
+		count++;
+	}
+	return count;
+}
+
+
 void reverse (char str[])
 {
 	int temp, i, j;
@@ -42,15 +52,6 @@ void hex_to_ascii (int n, char str[])
 	str[i] = '\0';
 
 	reverse(str);
-}
-
-int strlen (char str[])
-{
-	int count = 0;
-	while(str[count] != '\0') {
-		count++;
-	}
-	return count;
 }
 
 void backspace (char str[])
