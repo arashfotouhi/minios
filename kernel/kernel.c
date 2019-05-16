@@ -3,7 +3,7 @@
 #include "../lib/libc/string.h"
 #include "../lib/libc/mem.h"
 
-void main (void) 
+void kernel_main (void) 
 {
 	clear_screen();
 	kprint("MiniOS kernel successfully loaded.\n");
