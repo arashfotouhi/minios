@@ -104,7 +104,7 @@ void print_at (const char* message, int col, int row)
 	}
 }
 
-void print(const char* message)
+void kprint(const char* message)
 {
 	print_at(message, -1, -1);
 }

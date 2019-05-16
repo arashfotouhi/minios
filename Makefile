@@ -12,7 +12,7 @@ CC = gcc
 # Now adding this flag to explicitly state that position independent
 # executable should be stopped.
 
-CCFLAGS = -m32 -g -Wall -fno-pie -fstack-protector
+CCFLAGS = -m32 -g -Wall -fno-pie -fno-stack-protector
 LD = ld
 AS = nasm
 EMU = qemu-system-i386

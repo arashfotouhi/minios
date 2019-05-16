@@ -111,11 +111,11 @@ char *exception_message[] = {
 };
 
 void isr_handler(registers_t r) {
-	print("Received Interrupt: ");
+	kprint("Received Interrupt: ");
 	print_uint(r.int_no);
-	print("\n");
-	print(exception_message[r.int_no]);
-	print("\n");
+	kprint("\n");
+	kprint(exception_message[r.int_no]);
+	kprint("\n");
 }
 
 void register_interrupt_handler(u8 n, isr_t handler)

@@ -24,14 +24,14 @@ static void keyboard_callback (registers_t regs)
 		backspace(key_buffer);
 		print_backspace();
 	} else if(scancode == ENTER) {
-		print("\n");
+		kprint("\n");
 		user_input(key_buffer);
 		key_buffer[0] = '\0';
 	} else {
 		char letter = keyboard_key[(int)scancode];
 		char str[2] = {letter, '\0'};
 		append(key_buffer, letter);
-		print(str);
+		kprint(str);
 	}
 }
 

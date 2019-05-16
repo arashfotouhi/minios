@@ -1,5 +1,15 @@
 #include "string.h"
 
+void reverse (char str[])
+{
+	int temp, i, j;
+	for (i = 0, j = strlen(str) - 1; i < j; i++, j--) {
+		temp = str[i];
+		str[i] = str[j];
+		str[j] = temp;
+	}
+}
+
 void int_to_ascii (int n, char str[]) 
 {
 	int i, sign;
@@ -11,6 +21,27 @@ void int_to_ascii (int n, char str[])
 
 	if(sign < 0) str[i++] = '-';
 	str[i] = '\0';
+
+	reverse(str);
+}
+
+void hex_to_ascii (int n, char str[])
+{
+	int i, sign;
+	if((sign=n) < 0) n = -n;
+	i = 0;
+	do {
+		if (n % 16 <= 9) {
+			str[i++] = n % 16 + '0';
+		} else {
+			str[i++] = n % 16 + 'A';
+		}
+	} while ((n /= 16) > 0);
+
+	if(sign < 0) str[i++] = '-';
+	str[i] = '\0';
+
+	reverse(str);
 }
 
 int strlen (char str[])
