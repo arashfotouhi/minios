@@ -122,6 +122,9 @@ BEGIN_PM:
 	; because we loaded it from disk at this location.
 	call KERNEL_OFFSET
 
+        ;Warn if the kernel stopped
+        mov ebx, "Kernel Stop. Please try again."
+
 	; We should never reach this place so just loop indefinitely
 	jmp $
 
