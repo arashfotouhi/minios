@@ -7,11 +7,11 @@ disk_load:
 	mov cl, 0x02 ; Sector 2
 	int 0x13 ; Raise BIOS interrupt 13 (Low level disk services interrupt)
 
-	jc disk_error ; If there's a carry, there was an error in disk read so jumo to disk_error
+	jc disk_error ; If there's a carry, there was an error in disk read so jump to disk_error
 
 	pop dx ; Recover all the registers to initial state
 	cmp dh, al ; Check to make sure actual sectors read is equal to requested sector count
-	jne disk_error ; If the above is not equal jumo to disk_error
+	jne disk_error ; If the above is not equal jump to disk_error
 	ret
 
 ; Print disk error message and do an infinite loop
