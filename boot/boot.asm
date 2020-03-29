@@ -129,7 +129,7 @@ BEGIN_PM:
 	jmp $
 
 ; Global variables
-BOOT_DRIVE: db 0 ; Holds out boot drive ID / number
+BOOT_DRIVE: db 0 ; Holds our boot drive ID / number
 
 ; Message strings
 MSG_REAL_MODE db "Started in 16-bit Real Mode",0
