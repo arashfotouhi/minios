@@ -7,7 +7,7 @@ CC = gcc
 
 # The -fno-pie is used here in order to make sure the compiler does
 # not generate position independant executables. On Fedora my compiler
-# did not gernate position independent executables and things worked
+# did not generate position independent executables and things worked
 # fine without this flag, but switching to Arch Linux, things broke.
 # Now adding this flag to explicitly state that position independent
 # executable should be stopped.
