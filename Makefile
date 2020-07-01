@@ -21,7 +21,7 @@ EMUFLAGS = -device isa-debug-exit,iobase=0xf4,iosize=0x04 -fda
 
 all: minios
 
-minios: boot/boot.bin kernel.bin
+minios: boot/x86/boot.bin kernel.bin
 	cat $^ > minios
 
 kernel.bin: kernel/kernel_entry.o ${OBJ}
@@ -38,7 +38,7 @@ kernel.bin: kernel/kernel_entry.o ${OBJ}
 
 clean:
 	rm -rf *.bin *.dis *.map *.o minios	
-	rm -rf kernel/*.o boot/*.bin drivers/*.o cpu/*.o lib/libc/*.o
+	rm -rf kernel/*.o boot/x86/*.bin drivers/*.o cpu/*.o lib/libc/*.o
 
 kernel.dis: kernel.bin
 	ndisasm -b 32 $< > $@

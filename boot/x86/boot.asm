@@ -80,11 +80,11 @@ call switch_to_pm
 
 ; All the include assembly include files
 ; that we are using in this source file
-%include "boot/print/printstr.asm" ; used for printing strings on the screen in 16 bit mode
-%include "boot/disk/disk_load.asm" ; used for loading blocks onto the disk
-%include "boot/pm/gdt.asm" ; used for defining the Global Decriptor Table
-%include "boot/pm/printstrpm.asm" ; used for printing strings in 32 bit mode
-%include "boot/pm/switch_to_pm.asm" ; used for switching to 32 bit mode
+%include "boot/x86/print/printstr.asm" ; used for printing strings on the screen in 16 bit mode
+%include "boot/x86/disk/disk_load.asm" ; used for loading blocks onto the disk
+%include "boot/x86/pm/gdt.asm" ; used for defining the Global Decriptor Table
+%include "boot/x86/pm/printstrpm.asm" ; used for printing strings in 32 bit mode
+%include "boot/x86/pm/switch_to_pm.asm" ; used for switching to 32 bit mode
 
 ; At this point we have to make sure we are telling assembler that we
 ; are operating in 16 bit mode
