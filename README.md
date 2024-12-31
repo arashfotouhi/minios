@@ -1,6 +1,6 @@
 # MiniOS
 
-MiniOS aims to be an operating system with emphasis on code readability, simplicity, minimalism, and real-time capability. Initially the OS will taret Intel x86 processors only. Later it will be ported to other architechtures such as ARM.
+MiniOS aims to be an operating system with emphasis on code readability, simplicity, minimalism, and real-time capability. Initially the OS will target Intel x86 processors only. Later it will be ported to other architechtures such as ARM.
 
 This project was started based on the great teachings and code snippets found here: http://www.cs.bham.ac.uk/~exr/lectures/opsys/10_11/lectures/os-dev.pdf
 
